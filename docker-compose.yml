@@ -1,0 +1,63 @@
+version: '3.7'
+
+services:
+  # portainer:
+  #   container_name: portainer
+  #   image: portainer/portainer
+  #   #command: --no-auth -H unix:///var/run/docker.sock
+  #   #password adminadmin
+  #   command: --templates http://templates/templates.json
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   ports:
+  #     - "8888:9000"
+      
+  # adminer:
+  #   depends_on:
+  #     - db
+  #   container_name: adminer
+  #   image: adminer
+  #   # restart: always
+  #   ports:
+  #     - 8080:8080
+
+  phpmyadmin:
+    depends_on:
+      - db
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_USER: wordpress
+      PMA_PASSWORD: wordpress
+    ports:
+      - 8080:80
+
+  db:
+    container_name: mariadb
+    image: mariadb
+    volumes:
+    - db_data:/var/lib/mysql
+    # restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+
+  wordpress:
+    depends_on:
+      - db
+    container_name: wordpress
+    image: wordpress:latest
+    volumes:
+      - ./www:/var/www/html
+    ports:
+    - "8000:80"
+    # restart: always
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+volumes:
+  db_data:

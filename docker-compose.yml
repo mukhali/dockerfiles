@@ -1,17 +1,16 @@
 version: '3.7'
 
 services:
-  # portainer:
-  #   container_name: portainer
-  #   image: portainer/portainer
-  #   #command: --no-auth -H unix:///var/run/docker.sock
-  #   #password adminadmin
-  #   command: --templates http://templates/templates.json
+  # traefik:
+  #   container_name: traefik
+  #   image: traefik
+  #   command: -c /dev/null --web --docker --logLevel=INFO
+  #   ports:
+  #     - '8000:80'
+  #     - '8080:8080' # Dashboard
   #   volumes:
   #     - /var/run/docker.sock:/var/run/docker.sock
-  #   ports:
-  #     - "8888:9000"
-      
+
   # adminer:
   #   depends_on:
   #     - db
@@ -59,5 +58,6 @@ services:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: wordpress
+      
 volumes:
   db_data:

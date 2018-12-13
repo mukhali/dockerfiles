@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  athenapdf:
+    image: arachnysdocker/athenapdf-service
+    container_name: "athenapdf"
+    environment:
+      WEAVER_AUTH_KEY: weaver-auth-key
+      WEAVER_ATHENA_CMD: "athenapdf -S"
+      WEAVER_MAX_WORKERS: 10
+      WEAVER_MAX_CONVERSION_QUEUE: 50
+      WEAVER_WORKER_TIMEOUT: 90
+      WEAVER_CONVERSION_FALLBACK: "false"
+    ports:
+      - 8080:8080
+
+# curl http://localhost:8080/convert\?auth\=weaver-auth-key\&url\=http://google.com/ |> out.pdf

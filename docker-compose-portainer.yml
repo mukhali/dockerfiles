@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  portainer:
+    container_name: portainer
+    image: portainer/portainer
+    #command: --no-auth -H unix:///var/run/docker.sock
+    #password adminadmin
+    command: --templates http://templates/templates.json
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "8888:9000"
